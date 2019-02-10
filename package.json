@@ -1,7 +1,7 @@
 {
   "name": "blog",
   "version": "1.0.0",
-  "description": "",
+  "description": "Best blog ever with Next.js",
   "main": "index.js",
   "scripts": {
     "dev": "node server.js",
@@ -10,9 +10,24 @@
     "css:build": "node-sass --omit-source-map-url assets/sass/styles.scss static/css/styles.css",
     "css:watch": "npm run css:build -- --watch"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "nextjs",
+    "reactjs",
+    "express",
+    "firestore",
+    "firebase/auth",
+    "firebase/firestore"
+  ],
+  "author": "MoHo Khaleqi",
+  "license": "MIT",
+  "homepage": "https://github.com/mohokh67/next.js-best-blog-ever",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mohokh67/next.js-best-blog-ever"
+  },
+  "bugs": {
+    "url": "https://github.com/mohokh67/next.js-best-blog-ever/issues"
+  },
   "dependencies": {
     "@zeit/next-sass": "^1.0.1",
     "bulma": "^0.7.3",
@@ -47,9 +62,6 @@
     }
   },
   "lint-staged": {
-    "*.{js,json,css,md}": [
-      "prettier --single-quote --write",
-      "git add"
-    ]
+    "*.{js,json,css,md}": ["prettier --single-quote --write", "git add"]
   }
 }

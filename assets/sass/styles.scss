@@ -1,0 +1,14 @@
+@charset "utf-8";
+@import "../../node_modules/bulma/bulma.sass";
+
+// Import a Google Font
+@import url("https://fonts.googleapis.com/css?family=Nunito:400,700");
+
+html,
+body {
+  font-family: "Nunito", "Open Sans", sans-serif;
+}
+
+.pointer {
+  cursor: pointer;
+}

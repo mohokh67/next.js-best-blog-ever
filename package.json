@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
     "css:build": "node-sass --omit-source-map-url assets/sass/styles.scss static/css/styles.css",
-    "css:watch": "npm run css:build -- --watch"
+    "css:watch": "npm run css:build -- --watch",
+    "lint": "eslint --ext .js components lib pages"
   },
   "keywords": [
     "nextjs",
@@ -47,24 +48,13 @@
   "devDependencies": {
     "babel-eslint": "^10.0.3",
     "eslint": "^6.8.0",
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-config-prettier": "^6.9.0",
-    "eslint-plugin-html": "^6.0.0",
+    "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.20.0",
-    "eslint-plugin-prettier": "^3.1.2",
-    "husky": "^4.0.10",
-    "lint-staged": "^9.5.0",
-    "prettier": "^1.19.1"
+    "husky": "^4.0.10"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npm run lint"
     }
-  },
-  "lint-staged": {
-    "*.{js,json,css,md}": [
-      "prettier --single-quote --write",
-      "git add"
-    ]
   }
 }

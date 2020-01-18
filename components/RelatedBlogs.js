@@ -29,6 +29,7 @@ export default class RelatedBlogs extends Component {
         }
       })
       .catch((error) => {
+        // eslint-disable-next-line no-console
         console.log(`There was an error fetching blogs ${error}`);
       });
   }

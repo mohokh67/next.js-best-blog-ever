@@ -24,6 +24,7 @@ export default class Index extends Component {
         }
       })
       .catch((error) => {
+        // eslint-disable-next-line no-console
         console.log(`There was an error on fetching blogs ${error}`);
       });
   }

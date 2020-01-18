@@ -5,7 +5,9 @@ import UserInfo from './UserInfo';
 
 export default class BlogItem extends Component {
   render() {
-    const { title, intro, createdAt, userId, id, slug } = this.props.blog;
+    const {
+      title, intro, createdAt, userId, id, slug,
+    } = this.props.blog;
     return (
       <Fragment>
         <div className="content is-medium blog">

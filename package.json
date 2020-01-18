@@ -9,7 +9,8 @@
     "start": "NODE_ENV=production node server.js",
     "css:build": "node-sass --omit-source-map-url assets/sass/styles.scss static/css/styles.css",
     "css:watch": "npm run css:build -- --watch",
-    "lint": "eslint --ext .js components lib pages"
+    "lint": "eslint --ext .js components lib pages",
+    "lint:fix": "eslint --fix --ext .js components lib pages"
   },
   "keywords": [
     "nextjs",

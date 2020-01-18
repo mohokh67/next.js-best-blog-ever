@@ -6,15 +6,15 @@ export default class UserInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: null
+      user: null,
     };
   }
 
   componentDidMount() {
     fetchDocumentFromCollection({
       id: this.props.userId,
-      collectionName: 'users'
-    }).then(user => {
+      collectionName: 'users',
+    }).then((user) => {
       if (!isEmpty(user)) {
         this.setState({ user });
       }

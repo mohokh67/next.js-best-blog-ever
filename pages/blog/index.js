@@ -4,23 +4,23 @@ import Error from 'next/error';
 import base from '../../lib/db';
 import {
   fetchDocumentFromCollectionByFieldName,
-  isEmpty
+  isEmpty,
 } from '../../lib/utility';
 import BlogShow from '../../components/BlogShow';
 import BlogEdit from '../../components/BlogEdit';
 
 class Blog extends Component {
-  _isMounted = false;
+  isMounted = false;
 
   static async getInitialProps({ query }) {
     let blog = {};
     let found = false;
-    await new Promise(resolve => {
+    await new Promise((resolve) => {
       fetchDocumentFromCollectionByFieldName({
         collectionName: 'blogs',
         fieldName: 'slug',
-        value: query.slug
-      }).then(foundBlog => {
+        value: query.slug,
+      }).then((foundBlog) => {
         if (!isEmpty(foundBlog)) {
           found = true;
           blog = foundBlog;
@@ -36,35 +36,35 @@ class Blog extends Component {
     super(props);
     this.state = {
       blog: null,
-      editMode: false
+      editMode: false,
     };
   }
 
   toggleEditMode = () => {
-    if (this._isMounted) {
-      this.setState(prevState => ({
-        editMode: !prevState.editMode
+    if (this.isMounted) {
+      this.setState((prevState) => ({
+        editMode: !prevState.editMode,
       }));
     }
   };
 
-  updateBlog = blog => {
-    if (this._isMounted) {
+  updateBlog = (blog) => {
+    if (this.isMounted) {
       this.setState({ blog });
     }
     Router.push(`/blog?slug=${blog.slug}`, `/blog/${blog.slug}`);
   };
 
   componentDidMount() {
-    this._isMounted = true;
+    this.isMounted = true;
     this.ref = base.syncDoc(`/blogs/${this.props.blog.id}`, {
       context: this,
-      state: 'blog'
+      state: 'blog',
     });
   }
 
   componentWillUnmount() {
-    this._isMounted = false;
+    this.isMounted = false;
     base.removeBinding(this.ref);
   }
 

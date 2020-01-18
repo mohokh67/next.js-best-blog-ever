@@ -7,34 +7,34 @@ import { auth } from '../lib/db';
 const { publicRuntimeConfig } = getConfig();
 
 export default class TheNav extends Component {
-  _isMounted = false;
+  isMounted = false;
 
   constructor(props) {
     super(props);
     this.state = {
-      signedIn: false
+      signedIn: false,
     };
   }
 
   signOut = async () => {
     await auth.signOut();
     localStorage.removeItem(publicRuntimeConfig.localStorageUserId);
-    if (this._isMounted) {
+    if (this.isMounted) {
       this.setState({
-        signedIn: false
+        signedIn: false,
       });
     }
     Router.push('/');
   };
 
   componentDidMount() {
-    this._isMounted = true;
-    auth.onAuthStateChanged(user => {
+    this.isMounted = true;
+    auth.onAuthStateChanged((user) => {
       if (user) {
         // signed in
-        if (this._isMounted) {
+        if (this.isMounted) {
           this.setState({
-            signedIn: true
+            signedIn: true,
           });
         }
       }
@@ -42,7 +42,7 @@ export default class TheNav extends Component {
   }
 
   componentWillUnmount() {
-    this._isMounted = false;
+    this.isMounted = false;
   }
 
   render() {

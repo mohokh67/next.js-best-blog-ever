@@ -3,39 +3,38 @@ import Link from 'next/link';
 import base from '../lib/db';
 
 export default class RelatedBlogs extends Component {
-  _isMounted = false;
+  isMounted = false;
 
   constructor(props) {
     super(props);
     this.state = {
-      blogs: []
+      blogs: [],
     };
   }
 
   componentDidMount() {
-    this._isMounted = true;
+    this.isMounted = true;
     this.ref = base
       .get('blogs', {
         context: this,
         withIds: true,
-        query: ref =>
-          ref
-            .where('userId', '==', this.props.userId)
-            .limit(5)
-            .orderBy('createdAt', 'desc')
+        query: (ref) => ref
+          .where('userId', '==', this.props.userId)
+          .limit(5)
+          .orderBy('createdAt', 'desc'),
       })
-      .then(blogs => {
-        if (this._isMounted) {
+      .then((blogs) => {
+        if (this.isMounted) {
           this.setState({ blogs });
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(`There was an error fetching blogs ${error}`);
       });
   }
 
   componentWillUnmount() {
-    this._isMounted = false;
+    this.isMounted = false;
     base.removeBinding(this.ref);
   }
 
@@ -44,7 +43,7 @@ export default class RelatedBlogs extends Component {
       <Fragment>
         More blogs by this author
         <ul>
-          {this.state.blogs.map(blog => (
+          {this.state.blogs.map((blog) => (
             <li key={blog.id}>
               <Link as={`/blog/${blog.slug}`} href={`/blog?slug=${blog.slug}`}>
                 <a>{blog.title}</a>

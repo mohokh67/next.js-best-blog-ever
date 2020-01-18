@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-export default props => {
+export default (props) => {
   if (props.show) {
     return (
       <div className="notification is-danger">

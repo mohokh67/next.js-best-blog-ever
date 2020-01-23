@@ -10,7 +10,7 @@ import InvalidUserMessage from './InvalidUserMessage';
 
 const { publicRuntimeConfig } = getConfig();
 
-const ValidationInputIcon = props => {
+const ValidationInputIcon = (props) => {
   if (props.validated) {
     if (props.error) {
       return (
@@ -29,7 +29,7 @@ const ValidationInputIcon = props => {
 };
 
 export default class BlogCreate extends Component {
-  _isMounted = false;
+  isMounted = false;
 
   constructor(props) {
     super(props);
@@ -45,7 +45,7 @@ export default class BlogCreate extends Component {
       introErrorMessage: '',
       contentError: false,
       contentErrorMessage: '',
-      validated: false
+      validated: false,
     };
   }
 
@@ -53,10 +53,10 @@ export default class BlogCreate extends Component {
     Router.push('/');
   };
 
-  handleChange = event => {
-    if (this._isMounted) {
+  handleChange = (event) => {
+    if (this.isMounted) {
       this.setState({
-        [event.currentTarget.name]: event.currentTarget.value
+        [event.currentTarget.name]: event.currentTarget.value,
       });
     }
   };
@@ -70,38 +70,35 @@ export default class BlogCreate extends Component {
       introError: false,
       introErrorMessage: '',
       contentError: false,
-      contentErrorMessage: ''
+      contentErrorMessage: '',
     };
 
     this.setState({
       ...errors,
-      validated: true
+      validated: true,
     });
 
     const { title, intro, content } = this.state;
     if (!validator.isLength(title, { min: 5, max: 13 })) {
       valid = false;
       errors.titleError = true;
-      errors.titleErrorMessage =
-        'Title needs to be between 5 to 13 characters long';
+      errors.titleErrorMessage = 'Title needs to be between 5 to 13 characters long';
     }
 
     if (!validator.isLength(intro, { min: 10, max: 200 })) {
       valid = false;
       errors.introError = true;
-      errors.introErrorMessage =
-        'Intro needs to be between 10 to 200 characters long';
+      errors.introErrorMessage = 'Intro needs to be between 10 to 200 characters long';
     }
 
     if (content.length < 50) {
       valid = false;
       errors.contentError = true;
-      errors.contentErrorMessage =
-        'Content needs to be at least 50 characters long';
+      errors.contentErrorMessage = 'Content needs to be at least 50 characters long';
     }
 
     this.setState({
-      ...errors
+      ...errors,
     });
 
     return valid;
@@ -117,32 +114,32 @@ export default class BlogCreate extends Component {
           intro: this.state.intro,
           content: this.state.content,
           createdAt: moment().unix(),
-          userId: localStorage.getItem(publicRuntimeConfig.localStorageUserId)
+          userId: localStorage.getItem(publicRuntimeConfig.localStorageUserId),
         };
 
         this.props.addBlog(newBlog);
       } else {
         this.setState({
-          showInvalidUserMessage: true
+          showInvalidUserMessage: true,
         });
       }
     }
   };
 
   componentDidMount() {
-    this._isMounted = true;
+    this.isMounted = true;
     const userIdFromLocalStorage = localStorage.getItem(
-      publicRuntimeConfig.localStorageUserId
+      publicRuntimeConfig.localStorageUserId,
     );
 
     fetchDocumentFromCollection({
       id: userIdFromLocalStorage,
-      collectionName: 'users'
-    }).then(foundUser => {
+      collectionName: 'users',
+    }).then((foundUser) => {
       if (!isEmpty(foundUser)) {
-        auth.onAuthStateChanged(authUser => {
+        auth.onAuthStateChanged((authUser) => {
           if (authUser) {
-            if (authUser.uid === foundUser.uid && this._isMounted) {
+            if (authUser.uid === foundUser.uid && this.isMounted) {
               this.setState({ validUser: true });
             }
           }
@@ -151,16 +148,16 @@ export default class BlogCreate extends Component {
     });
   }
 
-  handleChange = event => {
-    if (this._isMounted) {
+  handleChange = (event) => {
+    if (this.isMounted) {
       this.setState({
-        [event.currentTarget.name]: event.currentTarget.value
+        [event.currentTarget.name]: event.currentTarget.value,
       });
     }
   };
 
   componentWillUnmount() {
-    this._isMounted = false;
+    this.isMounted = false;
   }
 
   render() {

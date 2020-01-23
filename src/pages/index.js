@@ -3,7 +3,7 @@ import base from '../lib/db';
 import BlogList from '../components/BlogList';
 
 export default class Index extends Component {
-  _isMounted = false;
+  isMounted = false;
 
   constructor(props) {
     super(props);
@@ -11,25 +11,26 @@ export default class Index extends Component {
   }
 
   componentDidMount() {
-    this._isMounted = true;
+    this.isMounted = true;
     this.ref = base
       .get('blogs', {
         context: this,
         withIds: true,
-        query: ref => ref.orderBy('createdAt', 'desc')
+        query: (ref) => ref.orderBy('createdAt', 'desc'),
       })
-      .then(blogs => {
-        if (this._isMounted) {
+      .then((blogs) => {
+        if (this.isMounted) {
           this.setState({ blogs });
         }
       })
-      .catch(error => {
+      .catch((error) => {
+        // eslint-disable-next-line no-console
         console.log(`There was an error on fetching blogs ${error}`);
       });
   }
 
   componentWillUnmount() {
-    this._isMounted = false;
+    this.isMounted = false;
     base.removeBinding(this.ref);
   }
 

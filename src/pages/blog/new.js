@@ -8,20 +8,20 @@ import BlogCreate from '../../components/BlogCreate';
 const { publicRuntimeConfig } = getConfig();
 
 export default class newBlog extends Component {
-  _isMounted = false;
+  isMounted = false;
 
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: false
+      loggedIn: false,
     };
   }
 
   componentDidMount() {
-    this._isMounted = true;
-    auth.onAuthStateChanged(user => {
+    this.isMounted = true;
+    auth.onAuthStateChanged((user) => {
       if (user) {
-        if (this._isMounted) {
+        if (this.isMounted) {
           this.setState({ loggedIn: true });
         }
       } else {
@@ -31,10 +31,10 @@ export default class newBlog extends Component {
   }
 
   componentWillUnmount() {
-    this._isMounted = false;
+    this.isMounted = false;
   }
 
-  addBlog = blog => {
+  addBlog = (blog) => {
     firestore
       .collection('blogs')
       .add(blog)

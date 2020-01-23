@@ -5,13 +5,13 @@ import Router from 'next/router';
 import { auth, firebase, firestore } from '../lib/db';
 import {
   fetchDocumentFromCollectionByFieldName,
-  isEmpty
+  isEmpty,
 } from '../lib/utility';
 
 const { publicRuntimeConfig } = getConfig();
 
 export default class signin extends Component {
-  _isMounted = false;
+  isMounted = false;
 
   constructor(props) {
     super(props);
@@ -19,51 +19,51 @@ export default class signin extends Component {
   }
 
   componentDidMount() {
-    this._isMounted = true;
-    auth.onAuthStateChanged(user => {
+    this.isMounted = true;
+    auth.onAuthStateChanged((user) => {
       if (user) {
         Router.push('/');
-      } else if (this._isMounted) {
+      } else if (this.isMounted) {
         this.setState({ hideContent: false });
       }
     });
   }
 
   componentWillUnmount() {
-    this._isMounted = false;
+    this.isMounted = false;
   }
 
-  authenticate = provider => {
+  authenticate = (provider) => {
     const authProvider = new firebase.auth[`${provider}AuthProvider`]();
-    auth.signInWithPopup(authProvider).then(result => {
+    auth.signInWithPopup(authProvider).then((result) => {
       const authUser = {
         uid: result.user.uid,
         email: result.user.email,
         name: result.user.displayName,
 
-        photo: result.user.photoURL
+        photo: result.user.photoURL,
       };
       this.authHandler(authUser);
     });
   };
 
-  authHandler = authUser => {
+  authHandler = (authUser) => {
     // check if user exists in users collection
     fetchDocumentFromCollectionByFieldName({
       collectionName: 'users',
       fieldName: 'uid',
-      value: authUser.uid
-    }).then(foundUser => {
+      value: authUser.uid,
+    }).then((foundUser) => {
       if (isEmpty(foundUser)) {
         // it is an empty object
         // add the user to users collection and go to home page
         firestore
           .collection('users')
           .add(authUser)
-          .then(createdUser => {
+          .then((createdUser) => {
             localStorage.setItem(
               publicRuntimeConfig.localStorageUserId,
-              createdUser.id
+              createdUser.id,
             );
             Router.push('/');
           });
@@ -71,7 +71,7 @@ export default class signin extends Component {
         // if yes, go to home page
         localStorage.setItem(
           publicRuntimeConfig.localStorageUserId,
-          foundUser.id
+          foundUser.id,
         );
         Router.push('/');
       }

@@ -7,7 +7,7 @@ import DateFormatter from './DateFormatter';
 
 const { publicRuntimeConfig } = getConfig();
 
-const Confirmation = props => {
+const Confirmation = (props) => {
   if (!props.show) {
     return null;
   }
@@ -30,7 +30,7 @@ const Confirmation = props => {
 };
 
 export default class BlogEdit extends Component {
-  _isMounted = false;
+  isMounted = false;
 
   constructor(props) {
     super(props);
@@ -39,7 +39,7 @@ export default class BlogEdit extends Component {
       intro: props.blog.intro,
       content: props.blog.content,
       createdAt: props.blog.createdAt,
-      hasModified: false
+      hasModified: false,
     };
   }
 
@@ -50,35 +50,37 @@ export default class BlogEdit extends Component {
       intro: this.state.intro,
       content: this.state.content,
       createdAt: moment().unix(),
-      userId: localStorage.getItem(publicRuntimeConfig.localStorageUserId)
+      userId: localStorage.getItem(publicRuntimeConfig.localStorageUserId),
     };
 
     this.props.updateBlog(blog);
-    if (this._isMounted) {
+    if (this.isMounted) {
       this.setState({ hasModified: true });
     }
   };
 
   closeConfirmation = () => this.setState({ hasModified: false });
 
-  handleChange = event => {
-    if (this._isMounted) {
+  handleChange = (event) => {
+    if (this.isMounted) {
       this.setState({
-        [event.currentTarget.name]: event.currentTarget.value
+        [event.currentTarget.name]: event.currentTarget.value,
       });
     }
   };
 
   componentDidMount() {
-    this._isMounted = true;
+    this.isMounted = true;
   }
 
   componentWillUnmount() {
-    this._isMounted = false;
+    this.isMounted = false;
   }
 
   render() {
-    const { title, intro, content, createdAt } = this.state;
+    const {
+      title, intro, content, createdAt,
+    } = this.state;
 
     return (
       <Fragment>

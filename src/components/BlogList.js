@@ -1,8 +1,8 @@
 import BlogItem from './BlogItem';
 
-export default props => (
+export default (props) => (
   <div>
-    {props.blogs.map(blog => (
+    {props.blogs.map((blog) => (
       <BlogItem key={blog.id} blog={blog} />
     ))}
   </div>

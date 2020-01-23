@@ -9,7 +9,9 @@ const { publicRuntimeConfig } = getConfig();
 
 export default class BlogShow extends Component {
   render() {
-    const { title, userId, intro, content, createdAt } = this.props.blog;
+    const {
+      title, userId, intro, content, createdAt,
+    } = this.props.blog;
     return (
       <Fragment>
         <Head>

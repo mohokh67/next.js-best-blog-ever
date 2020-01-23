@@ -24,12 +24,13 @@ app
 
     server.get('*', (req, res) => handle(req, res));
 
-    server.listen(3000, err => {
+    server.listen(3000, (err) => {
       if (err) throw err;
+      // eslint-disable-next-line no-console
       console.log('> Ready on http://localhost:3000');
     });
   })
-  .catch(ex => {
+  .catch((ex) => {
     // eslint-disable-next-line no-console
     console.error(ex.stack);
     process.exit(1);
